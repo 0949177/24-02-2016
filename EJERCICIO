@@ -1,0 +1,28 @@
+library(foreign)
+require(questionr)
+x<-read.dbf("C:\\Users\\SALA-C24\\Desktop\\COE1T215.dbf")
+x1<-subset(x,(ENT=="01"))
+table(x1$P3L)
+P3L1<-ordered(x1$P3L,levels=c("01","02","03","04","05","06","07","08","09","10","11","99"),labels=c("1 persona","2 a 5 personas","6 a 10 personas","11 a 15 personas","16 a 20 personas","21 a 30 personas","31 a 50 personas","51 a 100 personas","101 a 250 personas","251 a 500 personas","501 y más","No sabe"))
+x1$P3L<-P3L1
+#RECODIFICAR
+table(x1$P3L)
+table(x1$P5)
+P5_1<-ordered(x1$P5,levels=c("1","2","3","9"),labels=c("Sí","No trabajo la semana pasada","No se encontró en esa situación","No sabe"))
+x1$P5<-P5_1
+table(x1$P5)
+table(x1$P2E)
+P2E_1<-ordered(x1$P2E,levels=c("1","2","3","4","5","6","9"),labels=c("una persona temporalmente ausente de su actividad u oficio","pensionado o jubilado de su empleo","estudiante","una persona que se dedica a los quehaceres","una persona con alguna limitacion fisica o mental...","Otra condición","No sabe"))
+x1$P2E<-P2E_1
+table(x1$P2E)
+table(x1$P1)
+P1_123<-ordered(x1$P1,levels=c("1","2"),labels=c("SI","NO"))
+x1$P1<-P1_123
+table(x1$P3L,x1$P1) #Hacer tablas
+table(x1$P2E,x1$P1)
+K<-wtd.table(x1$P3L,x1$P1,weights = x1$FAC)
+K1<-wtd.table(x1$P1,x1$P1,weights = x1$FAC)
+K2<-wtd.table(x1$P5,x1$P1,weights = x1$FAC)
+K
+K1
+K2
